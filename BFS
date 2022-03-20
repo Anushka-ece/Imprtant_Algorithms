@@ -1,0 +1,29 @@
+//TC=O(V+E) as we have to visit all the vertices and edges
+//SC=O(V) as we have to take a queue which is storing all the nodes
+
+
+vector<int>bfs(int V,vector<int>graph[])//V is the number of nodes and vector is the given graph
+//graph is stored as adjacency list here
+{
+    vector<int>v;
+    queue<int>q;
+    qpush(0);
+    vector<int>vis(V,0);
+    vis[0]=1;
+    
+    while(!q.empty())
+    {
+        int td=q.front();
+        q.pop();
+        v.push_back(td);
+        for(auto x:graph[td])
+        {
+            if(!vis[x])
+            {
+                vis[x]=1;
+                q.push(x);
+            }
+        }
+    }
+    return v;
+}
