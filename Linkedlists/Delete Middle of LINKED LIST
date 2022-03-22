@@ -1,0 +1,25 @@
+Node* deleteMid(Node* head)
+{
+    if(head==NULL)
+    return NULL;
+    if(head->next==NULL)
+    {
+        delete head;
+        return NULL;
+    }
+    Node* prev;
+    Node* slowptr=head;
+    Node* fastptr=head;
+    while(fastptr && fastptr->next)
+    {
+        prev=slowptr;
+        slowptr=slowptr->next;
+        fastptr=fastptr->next->next;
+    }
+    prev->next=slowptr->next;
+    delete slowptr;
+    return head;
+}
+
+Expected Time Complexity: O(N).
+Expected Auxiliary Space: O(1
