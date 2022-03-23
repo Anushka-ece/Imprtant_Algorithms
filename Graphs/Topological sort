@@ -1,0 +1,59 @@
+//A sequence of events is called Topological ordeing or Topological sort
+//Definition:Topological sort is an ordering of nodes in a directed graph in such a way that where for each directed edge from node A to node B,node A appears before B in the ordering
+//Topological ordeing are not unique
+//It is not necessary for every graph to have topological sort or ordering
+//e.x. Suppose we have taken a graph where there is no starting point and no ending point,there is only one cycle in that graph and some node is always pointing towards another node
+//In this case of graph,we will never be able to write a topological ordering
+//Defuctions:(1)Directed Cyclic graph cannot have topological ordering (2)Only Directed Acyclic Graph can have topological ordering
+
+//Approach:Start tracing leaf nodes one by one and after that start tracing nodes connected to it
+//Indegree:Number of inward directed edges on a vertex in a directed graph,is called as Indegree
+//Algorithm:
+//(1)Till all the nodes are not visited,nodes with zero Indegree can be added to the output
+//(2)All the nodes which are adjacent to the terminal nodes,get their indegree subtracted
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    int n,m;
+    cin>>n>>m;
+    int count=0;
+    vector<vector<int>>adj_List(n);
+    vector<int>indegree(n,0);//here we have made a vector for taking indegrees as input
+    for(int i=0;i<m;i++)
+    {
+        int u,v;
+        cin>>u>>v;
+        //u-->v
+        adj_List[u].push_back(v);
+        indegree[v]++;//here we are incrementing indegree of v by 1
+    }
+    queue<int>pq;
+    for(int i=0;i<n;i++)
+    {
+        if(indegree[i]==0)
+        {
+            pq.push(i);
+        }
+    }
+    while(!pq.empty())
+    {
+        count++;
+        int x=pq.front();
+        pq.pop();
+        cout<<x<<" ";
+        //x-->v
+        for(auto[it]:adj_List[x])
+        {
+            indegree[it]--;
+            if(indegree[it]==0)
+            pq.push(it);
+        }
+    }
+}
+
+The time complexity of topological sort using Kahn's algorithm is O(V+E), where V = Vertices, E = Edges.
+The space complexity of topological sort is o(V)
