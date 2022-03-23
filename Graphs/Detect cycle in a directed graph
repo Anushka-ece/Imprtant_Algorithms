@@ -1,0 +1,43 @@
+/Here algo of undirected graph cannot work here because:
+//in case of that algo direction is not a deciding factor and hence those connections which are not cycle because of directions,will still be considered as cycle
+//here we are checking that if element is present in stack then it is called as visited
+//Steps:
+//1.Mark current node as visited and mark the index in recursion stack
+//2.Find all the vertices which are not visited and are adjacent to the current node
+//3.If adjacent vertices are already marked in recursion then cycle is found
+
+bool solve(int src,vector<int>&visited,vector<int>&stack,vector<int>&adj)
+    {
+     visited[src]=1;
+     stack[src]=1;
+     for(auto x:adj[src])
+     {
+         if(!visited[x])
+         {
+             bool conf=solve(src,visited,stack,adj);
+             if(conf)
+             return true;
+        }
+        else if(stack[x])
+        return true;
+     }
+     stack[src]=0;
+     return false;
+    }
+    
+    bool isCyclic(int V, vector<int> adj[]) {
+        vector<int>visited(V,0);
+        vector<int>stack(V,0);
+        for(int i=0;i<V;i++)
+        {
+            if(!visited[i])
+            {
+                bool c=solve(i,visited,stack,adj);
+                if(c)
+                return true;
+            }
+        }
+        return false;
+    }
+    Expected Time Complexity: O(V + E)
+Expected Auxiliary Space: O(V)
